@@ -63,14 +63,13 @@ stage('Build and Push Docker Image') {
 }
 
 stage('Update Deployment File') {
-  environment {
-    GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
-    GIT_USER_NAME = "learnnavya-sys"
-  }
   steps {
     withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
       sh '''
-      cd $WORKSPACE/java-maven-sonar-argocd-helm-k8s
+      rm -rf repo
+      git clone https://${GITHUB_TOKEN}@github.com/learnnavya-sys/Jenkins-Zero-To-Hero.git repo
+
+      cd repo/java-maven-sonar-argocd-helm-k8s
 
       git config user.email "learnnavya@gmail.com"
       git config user.name "Navya"
@@ -80,7 +79,7 @@ stage('Update Deployment File') {
       git add spring-boot-app-manifests/deployment.yml
       git commit -m "Update deployment image to version ${BUILD_NUMBER}"
 
-      git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+      git push origin main
       '''
     }
   }
