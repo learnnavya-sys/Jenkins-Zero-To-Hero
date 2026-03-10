@@ -20,7 +20,7 @@ stage('Install Docker CLI') {
 
 stage('Checkout') {
   steps {
-    git branch: 'main', url: 'https://github.com/learnnavya-sys/Jenkins-Zero-To-Hero.git'
+    checkout scm
   }
 }
 
