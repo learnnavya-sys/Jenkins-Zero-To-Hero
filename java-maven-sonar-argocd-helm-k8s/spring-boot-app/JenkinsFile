@@ -18,10 +18,10 @@ pipeline {
     }
 
     stage('Checkout') {
-      steps {
-        sh 'echo passed'
-      }
-    }
+  steps {
+    git branch: 'main', url: 'https://github.com/learnnavya-sys/Jenkins-Zero-To-Hero.git'
+  }
+}
 
     stage('Build and Test') {
       steps {
